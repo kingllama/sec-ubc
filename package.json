@@ -10,7 +10,8 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kingllama/sec-ubc.git"
+    "url": "git+https://github.com/kingllama/sec-ubc.git",
+    "postinstall": "cp db/template db/localconfig.js"
   },
   "keywords": [
     "light",
