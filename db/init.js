@@ -2,17 +2,7 @@ con = require('./localconfig.js');
 
 
 // DOCS http://knexjs.org/#Schema
-<<<<<<< HEAD
-con.knex.schema.createTable('drone', function(table) {
-	table.string('ip_addr');
-	table.string('name');
-	})
 
-	.createTable('user', function(table) {
-	table.string('email').unique();
-	table.string('hash');
-	table.string('salt');
-=======
 con.knex.schema.createTable('admins', function(table) {
 	table.string('username').unique();
 	table.string('hash');
@@ -39,8 +29,7 @@ con.knex.schema.createTable('admins', function(table) {
 	})
 
 	.createTable('galaries', function(table) {
-	table.binary('picture');
->>>>>>> 904cb851bc82a8ed8b6a43b541c594b63d13d1c1
+	table.binary('picture').references('content').inTable('blog_posts');
 	})
 	
 	.catch(function(e) {
