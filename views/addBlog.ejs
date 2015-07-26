@@ -22,10 +22,18 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h2>Add New Member</h2>
-                <form method="post" action="/admin/member/add" role="form">
+                <form method="post" action="/admin/member/add" role="form" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Name:</label>
                         <input type="text" name="memberTitle" placeholder="Enter Title" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Date:</label>
+                        <input type="date" name="memberDate" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Image:</label>
+                        <input type="file" name="userphoto" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Blurb:</label>
@@ -39,7 +47,7 @@
         <div class="row">
             <div class="form-group col-md-10 col-md-offset-1">
                 <h2>Add New Event</h2>
-                <form method="post" action="/admin/event/add" role="form">
+                <form method="post" action="/admin/event/add" role="form" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Date:</label>
                         <input type="date" name="eventDate" class="form-control">
@@ -48,7 +56,36 @@
                         <label>Title:</label>
                         <input type="text" name="eventTitle" placeholder="Enter Title" class="form-control">
                     </div>
+                    <div class="form-group">
+                        <label>Image:</label>
+                        <input type="file" name="eventphoto" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Link:</label>
+                        <input type="text" name="eventLink" placeholder="Enter Link" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Content:</label>
+                        <textarea class="form-control" name="eventContent"></textarea>
+                    </div>
                     <input type="submit" value="Add Event" class="btn btn-default">
+                </form>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h2>Create New Opportunity</h2>
+                <form method="post" action="/admin/opportunity/add" role="form">
+                    <div class="form-group">
+                        <label>Opportunity Title:</label>
+                        <input type="text" name="opportunityTitle" placeholder="Enter Title" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Content:</label>
+                        <textarea class="form-control" name="opportunityContent"></textarea>
+                    </div>
+                    <input type="submit" value="Add Opportunity" class="btn btn-default">
                 </form>
             </div>
         </div>
