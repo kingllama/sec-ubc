@@ -53,7 +53,10 @@ var blog = function (req,res){
 };
 
 var blogPost = function (req,res){
-
+    var blogs = con.knex('blog_posts').select().from('blog_posts').where('id',req.params.postId)
+        .then(function(a) {
+            render.base(res,'blog.ejs',{posts:a})
+        });
 };
 
 var admin = function (req,res){
