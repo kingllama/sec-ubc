@@ -77,7 +77,7 @@ var admin = function (req,res){
 };
 
 var blogCreatePost = function (req,res){
-	console.log('blog post hit');
+	console.log('blog POST hit');
 	con.knex('blog_posts').insert({content: req.body.blogContent,
 									title: req.body.blogTitle,
 									date: new Date() })
@@ -109,7 +109,7 @@ var blogDeletePost = function (req,res){
 };
 
 var memberAddPost = function (req,res){
-	console.log('member post hit')
+	console.log('member POST hit')
 	con.knex('members').insert({
         description: req.body.memberDescription,
         title: req.body.memberTitle
@@ -121,12 +121,13 @@ var memberAddPost = function (req,res){
 };
 
 var eventAddPost = function (req,res){
-	console.log('event post hit')
-	console.log(req.body.eventTitle)
-	if (!req.body.date){
+	console.log('event POST hit')
+	if (!isNaN(req.body.eventDate.valueOf())){
 		var date_now = new Date()
+		console.log('DIDNT rcvd a date')
 	}else{
-		date_now = req.body.date
+		console.log('rcvd a date')
+		var date_now = req.body.eventDate
 	}
 	con.knex('events').insert({date: date_now,
 								title: req.body.eventTitle})
