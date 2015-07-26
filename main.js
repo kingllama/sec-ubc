@@ -40,6 +40,10 @@ var events = function (req,res){
     render.base(res,"events.ejs",{})
 };
 
+var confrence = function (req, res){
+    render.base(res,"confrence.ejs", {})
+};
+
 var team = function (req,res){
 
 };
