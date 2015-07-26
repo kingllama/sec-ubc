@@ -12,11 +12,10 @@ var LocalStrategy = require('passport-local').Strategy;
 require('ejs');
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
-app.use(session({secret: 'cool'}));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(session({ secret: 'keyboard cat' }));
+app.use(session({secret: 'cool'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -96,7 +95,7 @@ var blogPost = function (req,res){
 
 var admin = function (req,res){
 	console.log("-----")
-        console.log(req.session);
+        console.log(req.user);
 	render.adminBase(res,'addBlog.ejs',{});
 };
 
@@ -116,7 +115,11 @@ var conference = function (req,res){
 }
 
 var opportunities = function (req,res){
-    render.base(res,"opportunities.ejs",{})
+     var blogs = con.knex('opportunity').select().from('opportunity').then(function(a) {
+        render.base(res,'opportunity.ejs',{posts:a})
+    }).catch(function(error) {
+        console.error(error)
+    });
 }
 
 var supporters = function (req,res){
@@ -146,9 +149,17 @@ var blogDeletePost = function (req,res){
 
 var memberAddPost = function (req,res){
 	console.log('member POST hit')
+	if (!isNaN(req.body.memberDate.valueOf())){
+		var date_now = new Date()
+		console.log('DIDNT rcvd a date')
+	}else{
+		console.log('rcvd a date')
+		var date_now = req.body.memberDate
+	}
 	con.knex('members').insert({
         description: req.body.memberDescription,
-        title: req.body.memberTitle
+        title: req.body.memberTitle,
+        date: date_now
 		// picture: req.body.picture 
     }).catch(function(error) {
         console.error(error);
@@ -166,11 +177,24 @@ var eventAddPost = function (req,res){
 		var date_now = req.body.eventDate
 	}
 	con.knex('events').insert({date: date_now,
-								title: req.body.eventTitle})
+								title: req.body.eventTitle,
+								content: req.body.eventContent,
+								link: req.body.eventLink})
 	.catch(function(error) {
     console.error(error)
   });
 	res.send('added');
+};
+
+var opportunityAddPost = function (req,res){
+	console.log('member POST hit')
+	con.knex('opportunity').insert({content: req.body.opportunityContent,
+									title: req.body.opportunityTitle,
+									date: new Date() })
+	.catch(function(error) {
+    console.error(error)
+});
+    res.send('added');
 };
 
 var authHelperPost = function (req,res){
@@ -194,7 +218,7 @@ passport.use(new LocalStrategy(
     // check in mongo if a user with username exists or not
     con.knex('admins').select().from('admins').where({username: username}).then(function(a) {
         //In case of any error, return using the done method
-        //console.log(a);
+        console.log(a);
         if (err)
           return done(err);
         // Username does not exist, log error & redirect back
@@ -246,6 +270,10 @@ app.post("/admin/member/add",memberAddPost);
 //app.get("/admin/event/add",eventAdd);
 app.post("/admin/event/add",eventAddPost);
 
+//opportunities
+app.post("/admin/opportunity/add",opportunityAddPost);
+
+
 app.get("/admin/blog/edit/:postId",blogRewritePost);
 app.put("/admin/blog/edit/:postId",blogUpdatePost);
 app.delete("/admin/blog/delete/:postId",blogDeletePost)
@@ -258,7 +286,7 @@ app.get("/login",authHelper);
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/'); //Can fire before session is destroyed?
-});s
+});
 
 //run server.
 var server = app.listen(2001, function(){
