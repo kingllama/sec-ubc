@@ -33,29 +33,22 @@ var main = function (req,res){
 };
 
 var about = function (req,res){
-    render.base(res,"about.ejs",{})
+    render.base(res,'about.ejs',{})
 };
 
 var events = function (req,res){
-    render.base(res,"events.ejs",{})
-};
 
-var confrence = function (req, res){
-    render.base(res,"confrence.ejs", {})
 };
 
 var team = function (req,res){
 
 };
-//NOT WORKING
 var blog = function (req,res){
 	var blogs = con.knex('blog_posts').select().from('blog_posts')
-	 .then(function() {  return; })
+	 .then(function(a) {  render.base(res,'blog.ejs',{posts:a}) })
 	.catch(function(error) {
     console.error(error)
   });
-	console.log(blogs);
-	res.send(blogs);
 
 };
 
@@ -64,10 +57,11 @@ var blogPost = function (req,res){
 };
 
 var admin = function (req,res){
-
+	render.adminBase(res,'addBlog.ejs',{});
 };
 
 var blogCreatePost = function (req,res){
+	console.log('blog post hit');
 	con.knex('blog_posts').insert({content: req.body.content,
 									title: req.body.title,
 									date: new Date() })
@@ -82,7 +76,7 @@ var adminLogin = function (req,res){
 };
 
 var blogWritePost = function (req,res){
-
+	
 };
 
 var blogRewritePost = function (req,res){
@@ -98,9 +92,25 @@ var blogDeletePost = function (req,res){
 
 };
 
-var memberAdd = function (req,res){
+var memberAddPost = function (req,res){
 	con.knex('members').insert({description: req.body.description,
-									title: req.body.title })
+									title: req.body.title ,
+									picture: req.body.picture })
+	.catch(function(error) {
+    console.error(error)
+  });
+	res.send('added');
+};
+
+var eventAddPost = function (req,res){
+	if (!req.body.date){
+		var date_now = new Date();
+	}else{
+		date_now = req.body.date;
+	}
+	con.knex('events').insert({date: date_now,
+									title: req.body.title ,
+									picture: req.body.picture })
 	.catch(function(error) {
     console.error(error)
   });
@@ -117,16 +127,24 @@ app.get("/blog",blog);
 app.get("/blog/:postId",blogPost);
 
 app.get("/admin",admin);
-// app.get("/admin/login",adminLogin);
+app.get("/admin/login",adminLogin);
 
-// app.get("/admin/blog/create",blogWritePost);
-// app.post("/admin/blog/create",blogCreatePost)
-// app.get("/admin/blog/edit/:postId",blogRewritePost);
-// app.put("/admin/blog/edit/:postId",blogUpdatePost);
-// app.delete("/admin/blog/delete/:postId",blogDeletePost)
+
+//blog
 app.get("/admin/blog/create",blogWritePost);
 app.post("/admin/blog/create",blogCreatePost);
-app.post("/admin/member/add",memberAdd);
+
+
+//members
+//app.get("/admin/member/add",memberAdd);
+app.post("/admin/member/add",memberAddPost);
+
+
+//events
+//app.get("/admin/event/create",eventAdd);
+app.post("/admin/event/create",eventAddPost);
+
+//app.post("/admin/member/add",memberAdd);
 app.get("/admin/blog/edit/:postId",blogRewritePost);
 app.put("/admin/blog/edit/:postId",blogUpdatePost);
 app.delete("/admin/blog/delete/:postId",blogDeletePost)
