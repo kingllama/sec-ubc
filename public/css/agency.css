@@ -22,6 +22,20 @@ body {
     max-width: 100%;
 }
 
+.call-to-action-btn {
+    background-color: rgba(75,75,75,0.5);
+    color: white;
+    border-radius: 5px;
+    width: 120px;
+    font-size: 20px;
+    text-align: center;
+    padding: 5px;
+    position: absolute;
+    left: 50%;
+    top: 580px;
+    transform: translate(-50%, 0);
+}
+
 .quote-image {
     display: block;
     margin: auto;
