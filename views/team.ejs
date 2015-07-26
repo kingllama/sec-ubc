@@ -1,9 +1,18 @@
-<div>team</div>
-<% for(var i=0; i< posts.length; i++) { %>
-    <div>
-        <h2><%= posts[i].title %></h2>
-        <div>
-            <%- posts[i].description %>
+<div class="member-container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h1>Our Team</h1>
+            <div class="row">
+                <% for(var i=0; i< posts.length; i++) { %>
+                    <div class="col-md-3 col-sm-4 col-tn-2 member-cell">
+                        <img src="/images/SEC-profile-picture.png" alt="<%= posts[i].title %>" class="member-profile">
+                        <h2><%= posts[i].title %></h2>
+                        <div>
+                            <%- posts[i].description %>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
         </div>
     </div>
-<% } %>
+</div>
