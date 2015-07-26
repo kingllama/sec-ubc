@@ -13,7 +13,6 @@ body {
 
 
 .content {
-    padding: 25px;
     padding-top: 91px;
     padding-bottom: 100px;
 }
@@ -52,7 +51,7 @@ body {
 
 p {
     font-size: 14px;
-    line-height: 1.75;
+    line-height: 1.60;
 }
 
 p.large {
@@ -157,6 +156,11 @@ a.blog-header h1:hover {
     margin-top: 20px;
 }
 
+.member-cell {
+    height: 160px;
+    margin-bottom: 50px;
+}
+
 .member-container h1 {
     margin-bottom: 50px;
 }
@@ -164,15 +168,21 @@ a.blog-header h1:hover {
 .member-profile {
     width: 160px;
     border-radius: 100%;
+    height: 160px;
     display: block;
     margin: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
 }
 
 .member-content {
-    display: inline-block;
     display: none;
+    position: absolute;
     width: 60%;
 }
+
 .shown-details {
     width: 100%;
 }
@@ -186,13 +196,19 @@ a.blog-header h1:hover {
 
 .years {
     text-align: center;
-    font-size: 15px;
+    font-size: 20px;
     margin-top: 10px;
     margin-bottom: 15px;
 }
 
+.years a {
+    color: #ff6900;
+    font-weight: bold;
+}
+
 .years .current {
     font-size: 1.2em;
+    color: black;
 }
 
 .event-holder {
@@ -205,6 +221,7 @@ a.blog-header h1:hover {
     border-radius: 100%;
     width: 100px;
     height: 100px;
+    cursor: pointer;
 }
 
 .event-data {
@@ -212,12 +229,26 @@ a.blog-header h1:hover {
     background-color: #ff6900;
     color: #fff;
     padding: 5px;
+    padding-left: 20px;
+    padding-top: 0px;
     margin: 10px;
     position: absolute;
+    width: 100%;
+    left: 0;
 }
 
 .event-list {
-    margin-bottom: 100px;
+    margin-bottom: 200px;
+}
+
+#caret {
+    position: absolute;
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #ff6900;
+    display: none;
 }
 
 .sponsor-logo {
@@ -375,6 +406,10 @@ fieldset[disabled] .btn-xl.active {
     background-color: #ff6900;
 }
 
+.navbar-default .nav li a:active {
+    background-color: #D15E1B;
+}
+
 .navbar-default .navbar-nav>.active>a {
     border-radius: 0;
     color: #fff;
@@ -521,7 +556,7 @@ section h3.section-subheading {
     width: 100%;
     height: 100%;
     opacity: 0;
-    background: rgba(254,209,54,.9);
+    background: #2299ff;
     -webkit-transition: all ease .5s;
     -moz-transition: all ease .5s;
     transition: all ease .5s;
@@ -939,7 +974,6 @@ ul.social-buttons li a {
 ul.social-buttons li a:hover,
 ul.social-buttons li a:focus,
 ul.social-buttons li a:active {
-    background-color: #fed136;
 }
 
 .btn:focus,
@@ -1031,4 +1065,52 @@ img::selection {
 
 img::-moz-selection {
     background: 0 0;
+}
+
+#logo-background-conference
+{
+
+    padding: 0px 0;
+    background-color: #FFF;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: 1000px 500px;
+
+
+}
+
+#par1
+{
+    color:#9a9393;
+    width: 800px;
+    font-size: 16px;
+    font-weight: lighter;
+    text-align: left;
+}
+
+#title-conference
+{
+    color:#ff773f;
+    font-weight: lighter;
+    font-size:36px;
+    font-family: 'Open Sans', sans-serif;
+
+
+}
+#line-conference
+{
+    width: 500px;
+
+}
+
+#want-attend
+{
+    background-size: 200px 100px;
+    background-color: #fb6700;
+    font-size: 16px;
+    padding:10px;
+    border:none;
+    color: #fff;
+    font-weight: bold;
+
 }

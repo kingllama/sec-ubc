@@ -23,7 +23,7 @@ con.knex.schema.createTable('admins', function(table) {
 	table.string('title');
 	table.string('content','longtext');
 	table.string('link');
-	table.specificType('picture', 'text[]');
+	table.string('image');
 	})
 
 	.createTable('members', function(table) {
@@ -31,7 +31,7 @@ con.knex.schema.createTable('admins', function(table) {
 	table.string('title');
 	table.text('description','longtext');
 	table.date('date');
-	table.specificType('picture', 'text');
+	table.string('image');
 	})
 
 	.createTable('conference', function(table) {

@@ -10,6 +10,23 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 require('ejs');
+var fs = require('fs');
+var multer = require('multer');
+var upload = multer({ 
+    dest: './public/images/uploads/',
+    rename: function (fieldname, filename) {
+        return filename.replace(/\W+/g, '-').toLowerCase() + Date.now();
+    },
+    onFileUploadStart: function (file) {
+        console.log(file.fieldname + ' is starting ...');
+    },
+    onFileUploadData: function (file, data) {
+        console.log(data.length + ' of ' + file.fieldname + ' arrived');
+    },
+    onFileUploadComplete: function (file) {
+        console.log(file.fieldname + ' uploaded to  ' + file.path);
+    }
+});
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use(cookieParser());
@@ -67,29 +84,44 @@ var about = function (req,res){
 
 
 var blog = function (req,res){
-    var blogs = con.knex('blog_posts').select().from('blog_posts').then(function(a) {
-        render.base(res,'blog.ejs',{posts:a}) 
+    var blogs = con.knex('blog_posts').select().from('blog_posts').orderBy('id','desc').then(function(a) {
+        var truncatedBlogPosts = []
+        render.base(res,'blog.ejs',{posts:a});
     }).catch(function(error) {
-        console.error(error)
+        console.error(error);
     });
 };
 
 var team = function (req,res){
+    if(req.query.year){
+        year = +req.query.year
+    } else {
+        year = new Date().getFullYear()
+    };
+    //.where("year",year)
     var blogs = con.knex('members').select().from('members').then(function(a) {
-        render.base(res,'team.ejs',{posts:a}) 
+        years = [year-2,year-1,year,year+1]
+        render.base(res,'team.ejs',{posts:a,years:years}) 
     }).catch(function(error) {
         console.error(error);
     });
 };
 
 var events = function (req,res){
-	var blogs = con.knex('events').select().from('events').then(function(a) {
+    if(req.query.year){
+        year = +req.query.year
+    } else {
+        year = new Date().getFullYear()
+    };
+
+	var blogs = con.knex('events').select().from('events').whereBetween("date",[year+"/01/01",year+"/12/31"]).then(function(a) {
         var properDateEvents = []
         for(var i=0; i< a.length; i++){
             a[i].date = moment(a[i].date).format("MMMM Do, YYYY")
             properDateEvents.push(a[i]);
         };
-        render.base(res,'events.ejs',{posts:a}) 
+        years = [year-2,year-1,year,year+1]
+        render.base(res,'events.ejs',{posts:a,years:years}) 
     }).catch(function(error) {
         console.error(error);
     });
@@ -158,6 +190,24 @@ var blogDeletePost = function (req,res){
 };
 
 var memberAddPost = function (req,res){
+    // get the temporary location of the file
+    var tmp_path = req.file.path;
+    // set where the file should actually exists 
+    var target_path = "/images/uploads/" + req.file.filename + ".jpg";
+    // move the file from the temporary location to the intended location
+    fs.rename(tmp_path, "./public" + target_path, function(err) {
+        if (err) throw err;
+        // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+        fs.unlink(tmp_path, function() {
+            if(err) {
+                throw err;
+            } else {
+                var profile_pic = req.file.name;
+                //use profile_pic to do other stuffs like update DB or write rendering logic here.
+            };
+        });
+    });
+
 	console.log('member POST hit')
 	if (!isNaN(req.body.memberDate.valueOf())){
 		var date_now = new Date()
@@ -169,8 +219,8 @@ var memberAddPost = function (req,res){
 	con.knex('members').insert({
         description: req.body.memberDescription,
         title: req.body.memberTitle,
-        date: date_now
-		// picture: req.body.picture 
+        date: date_now,
+		image: target_path
     }).catch(function(error) {
         console.error(error);
     });
@@ -178,7 +228,24 @@ var memberAddPost = function (req,res){
 };
 
 var eventAddPost = function (req,res){
-	console.log('event POST hit')
+	// get the temporary location of the file
+    var tmp_path = req.file.path;
+    // set where the file should actually exists 
+    var target_path = "/images/uploads/" + req.file.filename + ".jpg";
+    // move the file from the temporary location to the intended location
+    fs.rename(tmp_path, "./public" + target_path, function(err) {
+        if (err) throw err;
+        // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+        fs.unlink(tmp_path, function() {
+            if(err) {
+                throw err;
+            } else {
+                var profile_pic = req.file.name;
+                //use profile_pic to do other stuffs like update DB or write rendering logic here.
+            };
+        });
+    });
+
 	if (!isNaN(req.body.eventDate.valueOf())){
 		var date_now = new Date()
 		console.log('DIDNT rcvd a date')
@@ -189,11 +256,13 @@ var eventAddPost = function (req,res){
 	con.knex('events').insert({date: date_now,
 								title: req.body.eventTitle,
 								content: req.body.eventContent,
-								link: req.body.eventLink})
+								link: req.body.eventLink,
+                                image: target_path})
 	.catch(function(error) {
-    console.error(error)
-  });
+        console.error(error)
+    });
 	res.send('added');
+
 };
 
 var opportunityAddPost = function (req,res){
@@ -273,12 +342,12 @@ app.post("/admin/blog/create",blogCreatePost);
 
 //members
 //app.get("/admin/member/add",memberAdd);
-app.post("/admin/member/add",memberAddPost);
+app.post("/admin/member/add",upload.single('userphoto'),memberAddPost);
 
 
 //events
 //app.get("/admin/event/add",eventAdd);
-app.post("/admin/event/add",eventAddPost);
+app.post("/admin/event/add",upload.single('eventphoto'),eventAddPost);
 
 //opportunities
 app.post("/admin/opportunity/add",opportunityAddPost);
