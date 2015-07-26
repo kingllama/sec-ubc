@@ -82,7 +82,6 @@ h6 {
 .btn-primary:active,
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
-    border-color: #f6bf01;
     color: #fff;
     background-color: #fec503;
 }
@@ -209,13 +208,19 @@ fieldset[disabled] .btn-xl.active {
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 400;
     letter-spacing: 1px;
-    color: #fff;
+    color: #555;
+/*    border-right: 1px solid grey;*/
+}
+.navbar-default .nav li:nth-child(2) {
+/*    border-left: 1px solid grey;*/
 }
 
 .navbar-default .nav li a:hover,
 .navbar-default .nav li a:focus {
     outline: 0;
-    color: #fed136;
+    transition: color 0.3s, background-color 0.5s;
+    color: #fff;
+    background-color: #ff6900;
 }
 
 .navbar-default .navbar-nav>.active>a {
@@ -321,7 +326,7 @@ header .intro-text .intro-heading {
 }
 
 section {
-    padding: 100px 0;
+    padding-top: 20px
 }
 
 section h2.section-heading {
@@ -341,7 +346,6 @@ section h3.section-subheading {
 
 @media(min-width:768px) {
     section {
-        padding: 150px 0;
     }
 }
 
@@ -717,8 +721,12 @@ section#contact .text-danger {
 }
 
 footer {
-    padding: 25px 0;
+    padding: 5px 0;
     text-align: center;
+    background-color: #000;
+    background-image: url(../img/footer-image.png);
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 footer span.copyright {
@@ -726,6 +734,7 @@ footer span.copyright {
     text-transform: none;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     line-height: 40px;
+    font-size: 12px;
 }
 
 footer ul.quicklinks {
