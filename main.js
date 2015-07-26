@@ -4,28 +4,39 @@ var express = require("express");
 var app = express();
 var session = require('express-session');
 var con = require(__dirname + '/db/localconfig.js');
-var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 require('ejs');
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
-app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(session({secret: 'cool'}));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static(__dirname + '/public'));
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, user[0].id);
 });
 
-passport.deserializeUser(function(user, done) {
-  done(null, false);
-});
+
+    // used to deserialize the user
+    passport.deserializeUser(function(idloc, done) {
+        con.knex('admins').select().where({id: parseInt(idloc)}).then(function(a,err) {
+    	done(err, a[0]);
+        })
+       .catch(function(error) {
+        console.error(error)
+    });
+    });
 
 console.log("Node Server is Running!");
 
@@ -94,8 +105,7 @@ var blogPost = function (req,res){
 };
 
 var admin = function (req,res){
-	console.log("-----")
-        console.log(req.user);
+	console.log(req.user)
 	render.adminBase(res,'addBlog.ejs',{});
 };
 
@@ -218,7 +228,7 @@ passport.use(new LocalStrategy(
     // check in mongo if a user with username exists or not
     con.knex('admins').select().from('admins').where({username: username}).then(function(a) {
         //In case of any error, return using the done method
-        console.log(a);
+        //console.log(a);
         if (err)
           return done(err);
         // Username does not exist, log error & redirect back
