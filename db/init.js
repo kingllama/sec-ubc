@@ -21,19 +21,30 @@ con.knex.schema.createTable('admins', function(table) {
 	table.increments();
 	table.date('date');
 	table.string('title');
-	table.specificType('picture', 'text[]');
+	table.string('content','longtext');
+	table.string('link');
+	table.string('image');
 	})
 
 	.createTable('members', function(table) {
 	table.increments();
 	table.string('title');
-	table.text('description');
-	table.specificType('picture', 'text');
+	table.string('description');
+	table.date('date');
+	table.string('image');
 	})
 
 	.createTable('conference', function(table) {
 	table.increments();
 	table.text('content','longtext');
+	table.specificType('picture', 'text[]');
+	})
+
+	.createTable('opportunity', function(table) {
+	table.increments();
+	table.date('date');
+	table.text('content','longtext');
+	table.string('title');
 	table.specificType('picture', 'text[]');
 	})
 
