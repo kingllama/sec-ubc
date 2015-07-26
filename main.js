@@ -258,7 +258,7 @@ app.get("/login",authHelper);
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/'); //Can fire before session is destroyed?
-});s
+});
 
 //run server.
 var server = app.listen(2001, function(){
