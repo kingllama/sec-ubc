@@ -14,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 console.log("Node Server is Running!");
 
+//truncation helper method: use like this .trunc(#num of characters)
+String.prototype.trunc = String.prototype.trunc || function(n){ return this.length>n ? this.substr(0,n-1)+'&hellip;' : this; };
 //CUSTOM RENDER WRAPPER:
 //adds the "main" container wrapper to the template.
 var render = {
@@ -38,38 +40,36 @@ var about = function (req,res){
 
 
 var blog = function (req,res){
-	var blogs = con.knex('blog_posts').select().from('blog_posts')
-	 .then(function(a) {  render.base(res,'blog.ejs',{posts:a}) })
-	.catch(function(error) {
-    console.error(error)
-  });
-
+    var blogs = con.knex('blog_posts').select().from('blog_posts').then(function(a) {
+        render.base(res,'blog.ejs',{posts:a}) 
+    }).catch(function(error) {
+        console.error(error)
+    });
 };
 
 var team = function (req,res){
-	var blogs = con.knex('members').select().from('members')
-	 .then(function(a) {  render.base(res,'team.ejs',{posts:a}) })
-	.catch(function(error) {
-    console.error(error)
-  });
-
+    var blogs = con.knex('members').select().from('members').then(function(a) {
+        render.base(res,'team.ejs',{posts:a}) 
+    }).catch(function(error) {
+        console.error(error);
+    });
 };
 
 var events = function (req,res){
-	var blogs = con.knex('events').select().from('events')
-	 .then(function(a) {  render.base(res,'events.ejs',{posts:a}) })
-	.catch(function(error) {
-    console.error(error)
-  });
-
+	var blogs = con.knex('events').select().from('events').then(function(a) {
+        render.base(res,'events.ejs',{posts:a}) 
+    }).catch(function(error) {
+        console.error(error);
+    });
 };
 
 
 var blogPost = function (req,res){
-    var blogs = con.knex('blog_posts').select().from('blog_posts').where('id',req.params.postId)
-        .then(function(a) {
-            render.base(res,'blog.ejs',{posts:a})
-        });
+    var blogs = con.knex('blog_posts').select().from('blog_posts').where('id',req.params.postId).then(function(a) {
+        render.base(res,'blog.ejs',{posts:a})
+    }).catch(function(error) {
+        console.error(error)
+    });
 };
 
 var admin = function (req,res){
@@ -78,8 +78,8 @@ var admin = function (req,res){
 
 var blogCreatePost = function (req,res){
 	console.log('blog post hit');
-	con.knex('blog_posts').insert({content: req.body.content,
-									title: req.body.title,
+	con.knex('blog_posts').insert({content: req.body.blogContent,
+									title: req.body.blogTitle,
 									date: new Date() })
 	.catch(function(error) {
     console.error(error)
@@ -109,13 +109,13 @@ var blogDeletePost = function (req,res){
 };
 
 var memberAddPost = function (req,res){
-	con.knex('members').insert({description: req.body.description,
-									title: req.body.title ,
-									picture: req.body.picture })
-	.catch(function(error) {
-    console.error(error)
-  });
-	res.send('added');
+	con.knex('members').insert({
+        description: req.body.memberDescription,
+        title: req.body.memberTitle
+		// picture: req.body.picture 
+    }).catch(function(error) {
+        console.error(error);
+    });
 };
 
 var eventAddPost = function (req,res){
@@ -125,7 +125,7 @@ var eventAddPost = function (req,res){
 		date_now = req.body.date;
 	}
 	con.knex('events').insert({date: date_now,
-									title: req.body.title ,
+									title: req.body.EventTitle ,
 									picture: req.body.picture })
 	.catch(function(error) {
     console.error(error)

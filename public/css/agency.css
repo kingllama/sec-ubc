@@ -25,6 +25,7 @@ body {
 .quote-image {
     display: block;
     margin: auto;
+    max-width: 100%;
 }
 
 .text-muted {
