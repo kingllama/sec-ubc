@@ -93,7 +93,7 @@ var blogDeletePost = function (req,res){
 };
 
 var memberAddPost = function (req,res){
-	con.knex('members').insert({description: req.body.picture,
+	con.knex('members').insert({description: req.body.description,
 									title: req.body.title ,
 									picture: req.body.picture })
 	.catch(function(error) {
@@ -103,7 +103,12 @@ var memberAddPost = function (req,res){
 };
 
 var eventAddPost = function (req,res){
-	con.knex('members').insert({picture: req.body.picture,
+	if (!req.body.date){
+		var date_now = new Date();
+	}else{
+		date_now = req.body.date;
+	}
+	con.knex('events').insert({date: date_now,
 									title: req.body.title ,
 									picture: req.body.picture })
 	.catch(function(error) {
