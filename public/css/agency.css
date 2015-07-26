@@ -1032,3 +1032,51 @@ img::selection {
 img::-moz-selection {
     background: 0 0;
 }
+
+#logo-background-conference
+{
+
+    padding: 0px 0;
+    background-color: #FFF;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: 1000px 500px;
+
+
+}
+
+#par1
+{
+    color:#9a9393;
+    width: 800px;
+    font-size: 16px;
+    font-weight: lighter;
+    text-align: left;
+}
+
+#title-conference
+{
+    color:#ff773f;
+    font-weight: lighter;
+    font-size:36px;
+    font-family: 'Open Sans', sans-serif;
+
+
+}
+#line-conference
+{
+    width: 500px;
+
+}
+
+#want-attend
+{
+    background-size: 200px 100px;
+    background-color: #fb6700;
+    font-size: 16px;
+    padding:10px;
+    border:none;
+    color: #fff;
+    font-weight: bold;
+
+}
