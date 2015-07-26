@@ -96,7 +96,6 @@ h6 {
 .btn-primary:active,
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
-    border-color: #f6bf01;
     color: #fff;
     background-color: #F48620;
 }
@@ -200,6 +199,7 @@ fieldset[disabled] .btn-xl.active {
 .navbar-default .navbar-brand.active {
     color: #F48620;
 }
+
 navbar-nav
 .navbar-default .navbar-collapse {
     border-color: rgba(255,255,255,.02);
@@ -225,15 +225,17 @@ navbar-nav
     font-weight: 400;
     letter-spacing: 1px;
     color: #555;
-    border-right: 1px solid grey;
+/*    border-right: 1px solid grey;*/
 }
 .navbar-default .nav li:nth-child(2) {
-    border-left: 1px solid grey;
+/*    border-left: 1px solid grey;*/
 }
 
 .navbar-default .nav li a:hover,
 .navbar-default .nav li a:focus {
     outline: 0;
+    transition: color 0.3s, background-color 0.5s;
+    color: #fff;
     background-color: #ff6900;
 }
 
@@ -337,7 +339,7 @@ header .intro-text .intro-heading {
 }
 
 section {
-    padding: 100px 0;
+    padding-top: 20px
 }
 
 section h2.section-heading {
@@ -357,7 +359,6 @@ section h3.section-subheading {
 
 @media(min-width:768px) {
     section {
-        padding: 150px 0;
     }
 }
 
