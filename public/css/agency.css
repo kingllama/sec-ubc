@@ -185,7 +185,7 @@ fieldset[disabled] .btn-xl.active {
 .navbar-default .navbar-brand.active {
     color: #fec503;
 }
-navbar-nav
+
 .navbar-default .navbar-collapse {
     border-color: rgba(255,255,255,.02);
 }
@@ -219,7 +219,7 @@ navbar-nav
 }
 
 .navbar-default .navbar-nav>.active>a {
-    border-radius: 50;
+    border-radius: 0;
     color: #fff;
     background-color: #fed136;
 }
@@ -265,7 +265,7 @@ header {
     text-align: center;
     color: #fff;
     background-attachment: scroll;
-    background-image: url(public/img/header-bg.jpg);
+    background-image: url(/img/header-bg.jpg);
     background-position: center center;
     background-repeat: none;
     -webkit-background-size: cover;
@@ -719,10 +719,6 @@ section#contact .text-danger {
 footer {
     padding: 25px 0;
     text-align: center;
-    background-color: #222;
-    background-image: url(public/img/map-image.png);
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 footer span.copyright {

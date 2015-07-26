@@ -27,7 +27,7 @@ con.knex.schema.createTable('admins', function(table) {
 	.createTable('members', function(table) {
 	table.increments();
 	table.string('title');
-	table.text('discription');
+	table.text('description');
 	table.specificType('images', 'text[]');
 	})
 

@@ -43,8 +43,15 @@ var events = function (req,res){
 var team = function (req,res){
 
 };
-
+//NOT WORKING
 var blog = function (req,res){
+	var blogs = con.knex('blog_posts').select().from('blog_posts')
+	 .then(function() {  return; })
+	.catch(function(error) {
+    console.error(error)
+  });
+	console.log(blogs);
+	res.send(blogs);
 
 };
 
@@ -57,8 +64,10 @@ var admin = function (req,res){
 };
 
 var blogCreatePost = function (req,res){
-	console.log(req.body);
-	con.knex('blog_posts').insert({content: 'Slaughterhouse Five'}).catch(function(error) {
+	con.knex('blog_posts').insert({content: req.body.content,
+									title: req.body.title,
+									date: new Date() })
+	.catch(function(error) {
     console.error(error)
   });
 	res.send('added');
@@ -85,6 +94,15 @@ var blogDeletePost = function (req,res){
 
 };
 
+var memberAdd = function (req,res){
+	con.knex('members').insert({description: req.body.description,
+									title: req.body.title })
+	.catch(function(error) {
+    console.error(error)
+  });
+	res.send('added');
+};
+
 
 //urls
 app.get("/", main);
@@ -95,10 +113,16 @@ app.get("/blog",blog);
 app.get("/blog/:postId",blogPost);
 
 app.get("/admin",admin);
-app.get("/admin/login",adminLogin);
+// app.get("/admin/login",adminLogin);
 
+// app.get("/admin/blog/create",blogWritePost);
+// app.post("/admin/blog/create",blogCreatePost)
+// app.get("/admin/blog/edit/:postId",blogRewritePost);
+// app.put("/admin/blog/edit/:postId",blogUpdatePost);
+// app.delete("/admin/blog/delete/:postId",blogDeletePost)
 app.get("/admin/blog/create",blogWritePost);
-app.post("/admin/blog/create",blogCreatePost)
+app.post("/admin/blog/create",blogCreatePost);
+app.post("/admin/member/add",memberAdd);
 app.get("/admin/blog/edit/:postId",blogRewritePost);
 app.put("/admin/blog/edit/:postId",blogUpdatePost);
 app.delete("/admin/blog/delete/:postId",blogDeletePost)
