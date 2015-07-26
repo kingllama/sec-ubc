@@ -3,11 +3,14 @@
 var express = require("express");
 var app = express();
 var session = require('express-session');
+var con = require(__dirname + '/db/localconfig.js');
+var bodyParser = require('body-parser');
 require('ejs');
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use(session({secret: 'cool'}));
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 console.log("Node Server is Running!");
 
@@ -52,6 +55,36 @@ var blogPost = function (req,res){
 var admin = function (req,res){
 
 };
+
+var blogCreatePost = function (req,res){
+	console.log(req.body);
+	con.knex('blog_posts').insert({content: 'Slaughterhouse Five'}).catch(function(error) {
+    console.error(error)
+  });
+	res.send('added');
+};
+
+var adminLogin = function (req,res){
+
+};
+
+var blogWritePost = function (req,res){
+
+};
+
+var blogRewritePost = function (req,res){
+
+};
+
+var blogUpdatePost = function (req,res){
+
+};
+
+
+var blogDeletePost = function (req,res){
+
+};
+
 
 //urls
 app.get("/", main);
