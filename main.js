@@ -33,11 +33,11 @@ var main = function (req,res){
 };
 
 var about = function (req,res){
-
+    render.base(res,"about.ejs",{})
 };
 
 var events = function (req,res){
-
+    render.base(res,"events.ejs",{})
 };
 
 var team = function (req,res){
