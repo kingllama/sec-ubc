@@ -3,3 +3,4 @@ node_modules/*
 db/localconfig.js
 public/images/uploads
 public/images/uploads/*
+npm-debug.log
