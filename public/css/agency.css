@@ -783,6 +783,10 @@ footer {
     width: 1950px;
     position: fixed;
     bottom: 0;
+    border-top-color: #000;
+    border-top-width: 10px; 
+    
+
     
 }
 
@@ -793,8 +797,9 @@ footer span.copyright {
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     line-height: 40px;
     font-size: 12px;
-    position: fixed;
-    float: left;
+    position: relative;
+    right:300px;
+
     bottom: 0;
 }
 
@@ -809,6 +814,9 @@ footer ul.quicklinks {
 ul.social-buttons {
     margin-bottom: 0;
     padding-right: 500px;
+    position: relative;
+    left:300px;
+
 }
 
 ul.social-buttons li a {

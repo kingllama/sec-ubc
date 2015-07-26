@@ -36,13 +36,7 @@ var about = function (req,res){
     render.base(res,'about.ejs',{})
 };
 
-var events = function (req,res){
 
-};
-
-var team = function (req,res){
-
-};
 var blog = function (req,res){
 	var blogs = con.knex('blog_posts').select().from('blog_posts')
 	 .then(function(a) {  render.base(res,'blog.ejs',{posts:a}) })
@@ -51,6 +45,25 @@ var blog = function (req,res){
   });
 
 };
+
+var team = function (req,res){
+	var blogs = con.knex('members').select().from('members')
+	 .then(function(a) {  render.base(res,'team.ejs',{posts:a}) })
+	.catch(function(error) {
+    console.error(error)
+  });
+
+};
+
+var events = function (req,res){
+	var blogs = con.knex('events').select().from('events')
+	 .then(function(a) {  render.base(res,'events.ejs',{posts:a}) })
+	.catch(function(error) {
+    console.error(error)
+  });
+
+};
+
 
 var blogPost = function (req,res){
     var blogs = con.knex('blog_posts').select().from('blog_posts').where('id',req.params.postId)
@@ -144,10 +157,9 @@ app.post("/admin/member/add",memberAddPost);
 
 
 //events
-//app.get("/admin/event/create",eventAdd);
-app.post("/admin/event/create",eventAddPost);
+//app.get("/admin/event/add",eventAdd);
+app.post("/admin/event/add",eventAddPost);
 
-//app.post("/admin/member/add",memberAdd);
 app.get("/admin/blog/edit/:postId",blogRewritePost);
 app.put("/admin/blog/edit/:postId",blogUpdatePost);
 app.delete("/admin/blog/delete/:postId",blogDeletePost)
