@@ -148,11 +148,19 @@ var conference = function (req,res){
 
 var opportunities = function (req,res){
      var blogs = con.knex('opportunity').select().from('opportunity').then(function(a) {
-        render.base(res,'opportunity.ejs',{posts:a})
+        render.base(res,'opportunities.ejs',{posts:a})
     }).catch(function(error) {
         console.error(error)
     });
-}
+};
+
+var opportunity = function (req,res){
+    var blogs = con.knex('opportunity').select().from('opportunity').where('id',req.params.postId).then(function(a) {
+        render.base(res,'opportunities.ejs',{posts:a})
+    }).catch(function(error) {
+        console.error(error)
+    });
+};
 
 var supporters = function (req,res){
     render.base(res,"supporters.ejs",{})
@@ -214,7 +222,7 @@ var memberAddPost = function (req,res){
     }).catch(function(error) {
         console.error(error);
     });
-    res.send('added');
+    res.redirect("/team")
 };
 
 var eventAddPost = function (req,res){
@@ -318,6 +326,7 @@ app.get("/team",team);
 app.get("/blog",blog);
 app.get("/blog/:postId",blogPost);
 app.get("/opportunities",opportunities);
+app.get("/opportunity/:postId",opportunity);
 app.get("/supporters",supporters);
 app.get("/conference",conference);
 

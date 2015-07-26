@@ -1114,3 +1114,17 @@ img::-moz-selection {
     font-weight: bold;
 
 }
+
+.contact-button {
+    color: #fff;
+    border-radius: 5px;
+    background-color: #fb6700;
+    padding: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 5px;
+}
+
+.contact-button:hover {
+    color: #fff;
+}
