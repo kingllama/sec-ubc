@@ -29,7 +29,7 @@ con.knex.schema.createTable('admins', function(table) {
 	.createTable('members', function(table) {
 	table.increments();
 	table.string('title');
-	table.string('description');
+	table.text('description','longtext');
 	table.date('date');
 	table.string('image');
 	})
