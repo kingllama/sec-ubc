@@ -62,13 +62,13 @@ app.get("/blog",blog);
 app.get("/blog/:postId",blogPost);
 
 app.get("/admin",admin);
-app.get("/admin/login",adminLogin);
+// app.get("/admin/login",adminLogin);
 
-app.get("/admin/blog/create",blogWritePost);
-app.post("/admin/blog/create",blogCreatePost)
-app.get("/admin/blog/edit/:postId",blogRewritePost);
-app.put("/admin/blog/edit/:postId",blogUpdatePost);
-app.delete("/admin/blog/delete/:postId",blogDeletePost)
+// app.get("/admin/blog/create",blogWritePost);
+// app.post("/admin/blog/create",blogCreatePost)
+// app.get("/admin/blog/edit/:postId",blogRewritePost);
+// app.put("/admin/blog/edit/:postId",blogUpdatePost);
+// app.delete("/admin/blog/delete/:postId",blogDeletePost)
 
 //run server.
 var server = app.listen(2001, function(){
