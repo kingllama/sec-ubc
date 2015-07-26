@@ -45,7 +45,7 @@ var confrence = function (req, res){
 };
 
 var team = function (req,res){
-
+    render.base(res, "team.ejs", {})
 };
 //NOT WORKING
 var blog = function (req,res){
