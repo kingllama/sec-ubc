@@ -873,17 +873,17 @@ section#contact .text-danger {
 }
 
 footer {
-    padding: 5px 0;
+    padding: 0px 0;
     background-color: #FFF;
     background-image: url(../img/footer-image.png);
     background-position: left;
     background-repeat: no-repeat;
     width: 1950px;
+    height: 50x;
     position: fixed;
     bottom: 0;
-    border-top-color: #000;
-    border-top-width: 10px; 
-    
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
+
 
     
 }
