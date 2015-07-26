@@ -14,27 +14,27 @@ con.knex.schema.createTable('admins', function(table) {
 	table.date('date');
 	table.text('content','longtext');
 	table.string('title');
-	table.specificType('images', 'text[]');
+	table.specificType('picture', 'text[]');
 	})
 
 	.createTable('events', function(table) {
 	table.increments();
 	table.date('date');
 	table.string('title');
-	table.specificType('images', 'text[]');
+	table.specificType('picture', 'text[]');
 	})
 
 	.createTable('members', function(table) {
 	table.increments();
 	table.string('title');
 	table.text('description');
-	table.specificType('images', 'text');
+	table.specificType('picture', 'text');
 	})
 
 	.createTable('conference', function(table) {
 	table.increments();
 	table.text('content','longtext');
-	table.specificType('images', 'text[]');
+	table.specificType('picture', 'text[]');
 	})
 
 	/*.createTable('galaries', function(table) {
