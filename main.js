@@ -40,8 +40,12 @@ var events = function (req,res){
     render.base(res,"events.ejs",{})
 };
 
-var team = function (req,res){
+var confrence = function (req, res){
+    render.base(res,"confrence.ejs", {})
+};
 
+var team = function (req,res){
+    render.base(res, "team.ejs", {})
 };
 //NOT WORKING
 var blog = function (req,res){

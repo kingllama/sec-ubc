@@ -42,7 +42,7 @@ con.knex.schema.createTable('admins', function(table) {
 	table.bigInteger('bid').references('id').inTable('blog_posts');
 	table.string('path');
 	})*/
-	
+
 	.catch(function(e) {
   	console.error(e);
 	})
