@@ -103,7 +103,7 @@ var memberAddPost = function (req,res){
 };
 
 var eventAddPost = function (req,res){
-	con.knex('members').insert({description: req.body.picture,
+	con.knex('members').insert({picture: req.body.picture,
 									title: req.body.title ,
 									picture: req.body.picture })
 	.catch(function(error) {
@@ -131,15 +131,15 @@ app.post("/admin/blog/create",blogCreatePost);
 
 
 //members
-app.get("/admin/member/add",memberAdd);
+//app.get("/admin/member/add",memberAdd);
 app.post("/admin/member/add",memberAddPost);
 
 
 //events
-app.get("/admin/event/create",eventAdd);
+//app.get("/admin/event/create",eventAdd);
 app.post("/admin/event/create",eventAddPost);
 
-app.post("/admin/member/add",memberAdd);
+//app.post("/admin/member/add",memberAdd);
 app.get("/admin/blog/edit/:postId",blogRewritePost);
 app.put("/admin/blog/edit/:postId",blogUpdatePost);
 app.delete("/admin/blog/delete/:postId",blogDeletePost)
