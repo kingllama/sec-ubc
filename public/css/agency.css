@@ -19,11 +19,12 @@ body {
 }
 
 #top-image {
-    background-color: lightblue;
-    width: 100%;
-    height: 350px;
-    display: block;
+    max-width: 100%;
+}
 
+.quote-image {
+    display: block;
+    margin: auto;
 }
 
 .text-muted {
@@ -95,6 +96,16 @@ h1 {
     margin-bottom: 20px;
     font-size: 20px;
     color: #ff6900;
+}
+
+
+#twitter-widget-0 {
+    width: 450px !important;
+}
+
+#twitter-widget {
+    float: right;
+    margin: 20px;
 }
 
 .img-centered {
@@ -210,14 +221,9 @@ fieldset[disabled] .btn-xl.active {
 }
 
 .navbar-default {
-<<<<<<< HEAD
-    border-color: transparent;
-    background-color: #222;
-=======
     background-color: #fff;
     padding: 20px;
     border-bottom: 1px solid grey;
->>>>>>> 9e5a9505e118b2a1323e6257755d933e60a4931b
 }
 
 .navbar-default .navbar-brand {
@@ -285,9 +291,7 @@ fieldset[disabled] .btn-xl.active {
 
 @media(min-width:768px) {
     .navbar-default {
-        padding: 25px 0;
-        border: 0;
-        background-color: transparent;
+        padding: 20px 0;
         -webkit-transition: padding .3s;
         -moz-transition: padding .3s;
         transition: padding .3s;
@@ -384,7 +388,7 @@ section h2.section-heading {
 }
 
 section h3.section-subheading {
-    margin-bottom: 75px;
+    margin-bottom: 20px;
     text-transform: none;
     font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 16px;
@@ -708,6 +712,8 @@ section#contact {
     background-image: url(../img/map-image.png);
     background-position: center;
     background-repeat: no-repeat;
+    clear:both;
+    padding-bottom: 70px;
 }
 
 section#contact .section-heading {
