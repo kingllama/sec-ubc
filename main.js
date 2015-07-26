@@ -10,6 +10,23 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 require('ejs');
+var fs = require('fs');
+var multer = require('multer');
+var upload = multer({ 
+    dest: './public/images/uploads/',
+    rename: function (fieldname, filename) {
+        return filename.replace(/\W+/g, '-').toLowerCase() + Date.now();
+    },
+    onFileUploadStart: function (file) {
+        console.log(file.fieldname + ' is starting ...');
+    },
+    onFileUploadData: function (file, data) {
+        console.log(data.length + ' of ' + file.fieldname + ' arrived');
+    },
+    onFileUploadComplete: function (file) {
+        console.log(file.fieldname + ' uploaded to  ' + file.path);
+    }
+});
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use(session({secret: 'cool'}));
@@ -86,6 +103,7 @@ var events = function (req,res){
     } else {
         year = new Date().getFullYear()
     };
+
 	var blogs = con.knex('events').select().from('events').whereBetween("date",[year+"/01/01",year+"/12/31"]).then(function(a) {
         var properDateEvents = []
         for(var i=0; i< a.length; i++){
@@ -171,7 +189,25 @@ var memberAddPost = function (req,res){
 };
 
 var eventAddPost = function (req,res){
-	console.log('event POST hit')
+	// get the temporary location of the file
+    var tmp_path = req.file.path;
+    // set where the file should actually exists 
+    var target_path = "./public/images/uploads/" + req.file.filename + ".jpg";
+    console.log(target_path)
+    // move the file from the temporary location to the intended location
+    fs.rename(tmp_path, target_path, function(err) {
+        if (err) throw err;
+        // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+        fs.unlink(tmp_path, function() {
+            if(err) {
+                throw err;
+            } else {
+                var profile_pic = req.file.name;
+                //use profile_pic to do other stuffs like update DB or write rendering logic here.
+            };
+        });
+    });
+
 	if (!isNaN(req.body.eventDate.valueOf())){
 		var date_now = new Date()
 		console.log('DIDNT rcvd a date')
@@ -182,9 +218,10 @@ var eventAddPost = function (req,res){
 	con.knex('events').insert({date: date_now,
 								title: req.body.eventTitle})
 	.catch(function(error) {
-    console.error(error)
-  });
+        console.error(error)
+    });
 	res.send('added');
+
 };
 
 var authHelperPost = function (req,res){
@@ -258,7 +295,7 @@ app.post("/admin/member/add",memberAddPost);
 
 //events
 //app.get("/admin/event/add",eventAdd);
-app.post("/admin/event/add",eventAddPost);
+app.post("/admin/event/add",upload.single('eventphoto'),eventAddPost);
 
 app.get("/admin/blog/edit/:postId",blogRewritePost);
 app.put("/admin/blog/edit/:postId",blogUpdatePost);
