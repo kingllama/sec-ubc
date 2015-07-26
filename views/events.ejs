@@ -1,7 +1,23 @@
-<% for(var i=0; i< posts.length; i++) { %>
-    <div>
-        <h2><%= posts[i].title %></h2>
+<div class="row event-list">
+    <div class="col-md-8 col-md-offset-2">
+        <h1>Events</h1>
+        <div class="years"><span>Last Year</span> <span class="current">This Year</span> <span>Next Yer</span></div>
+        <% for(var i=0; i< posts.length; i++) { %>
+            <div class="event-holder">
+                <div class="event-photo"></div>
+                <div class="event-data">
+                    <h2><%= posts[i].title %></h2>
+                	<h5><%= posts[i].date %></h5>
+                </div>
+            </div>
+        <% } %>
     </div>
-    <div>
-    	<h3><%= posts[i].date %></h2>
-<% } %>
+</div>
+<div clas="spacer"> </div>
+<script>
+    $(function () {
+        $(".event-holder").on("click",function(){
+            $(this).find(".event-data").toggle();
+        });
+    });
+</script>

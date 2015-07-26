@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 console.log("Node Server is Running!");
 
+var moment = require('moment')
 //truncation helper method: use like this .trunc(#num of characters)
 String.prototype.trunc = String.prototype.trunc || function(n){ return this.length>n ? this.substr(0,n-1)+'&hellip;' : this; };
 //CUSTOM RENDER WRAPPER:
@@ -57,6 +58,11 @@ var team = function (req,res){
 
 var events = function (req,res){
 	var blogs = con.knex('events').select().from('events').then(function(a) {
+        var properDateEvents = []
+        for(var i=0; i< a.length; i++){
+            a[i].date = moment(a[i].date).format("MMMM Do, YYYY")
+            properDateEvents.push(a[i]);
+        };
         render.base(res,'events.ejs',{posts:a}) 
     }).catch(function(error) {
         console.error(error);
@@ -86,6 +92,18 @@ var blogCreatePost = function (req,res){
   });
 	res.send('added');
 };
+
+var conference = function (req,res){
+    render.base(res,"conference.ejs",{})
+}
+
+var opportunities = function (req,res){
+    render.base(res,"opportunities.ejs",{})
+}
+
+var supporters = function (req,res){
+    render.base(res,"supporters.ejs",{})
+}
 
 var adminLogin = function (req,res){
 
@@ -145,6 +163,9 @@ app.get("/events",events);
 app.get("/team",team);
 app.get("/blog",blog);
 app.get("/blog/:postId",blogPost);
+app.get("/opportunities",opportunities);
+app.get("/supporters",supporters);
+app.get("/conference",conference);
 
 app.get("/admin",admin);
 app.get("/admin/login",adminLogin);

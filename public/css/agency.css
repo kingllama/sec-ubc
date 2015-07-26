@@ -184,6 +184,49 @@ a.blog-header h1:hover {
     border-bottom: 1px solid #ff6900;
 }
 
+.years {
+    text-align: center;
+    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.years .current {
+    font-size: 1.2em;
+}
+
+.event-holder {
+    display: inline-block;
+    padding-right: 10px;
+}
+
+.event-photo {
+    background-color: lightblue;
+    border-radius: 100%;
+    width: 100px;
+    height: 100px;
+}
+
+.event-data {
+    display: none;
+    background-color: #ff6900;
+    color: #fff;
+    padding: 5px;
+    margin: 10px;
+    position: absolute;
+}
+
+.event-list {
+    margin-bottom: 100px;
+}
+
+.sponsor-logo {
+    height: 200px;
+    width: 200px;
+    text-align: center;
+}
+
+
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,
