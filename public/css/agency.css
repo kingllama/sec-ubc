@@ -22,6 +22,20 @@ body {
     max-width: 100%;
 }
 
+.call-to-action-btn {
+    background-color: rgba(75,75,75,0.5);
+    color: white;
+    border-radius: 5px;
+    width: 120px;
+    font-size: 20px;
+    text-align: center;
+    padding: 5px;
+    position: absolute;
+    left: 50%;
+    top: 580px;
+    transform: translate(-50%, 0);
+}
+
 .quote-image {
     display: block;
     margin: auto;
@@ -121,6 +135,15 @@ h1 {
     background-color: #222;
 }
 
+.blog-header {
+    color: black;
+}
+
+a.blog-header h1:hover {
+    color: black;
+    border-bottom: 1px solid black;
+}
+
 .btn-primary {
     border-color: #fed136;
     text-transform: uppercase;
@@ -128,6 +151,37 @@ h1 {
     font-weight: 700;
     color: #fff;
     background-color: #fed136;
+}
+
+.member-container {
+    margin-top: 20px;
+}
+
+.member-container h1 {
+    margin-bottom: 50px;
+}
+
+.member-profile {
+    width: 160px;
+    border-radius: 100%;
+    display: block;
+    margin: auto;
+}
+
+.member-content {
+    display: inline-block;
+    display: none;
+    width: 60%;
+}
+.shown-details {
+    width: 100%;
+}
+
+.member-content h2 {
+    margin-top: 0px;
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid #ff6900;
 }
 
 .btn-primary:hover,
@@ -928,24 +982,10 @@ ul.social-buttons li a:active {
     opacity: 0;
 }
 
-::-moz-selection {
-    text-shadow: none;
-    background: #fed136;
-}
-
-::selection {
-    text-shadow: none;
-    background: #fed136;
-}
-
 img::selection {
     background: 0 0;
 }
 
 img::-moz-selection {
     background: 0 0;
-}
-
-body {
-    webkit-tap-highlight-color: #fed136;
 }
