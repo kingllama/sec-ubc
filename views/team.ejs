@@ -1,6 +1,15 @@
 <div class="member-container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
+            <div class="years">
+                <% for(var i=0; i< years.length; i++) { %>
+                    <% if(i == 2){ %>
+                        <span class="current"><%= years[i] %></span>
+                    <% } else { %>
+                        <span><a href="/team?year=<%= years[i] %>"><%= years[i] %></a></span>
+                    <% } %>
+                <% } %>
+            </div>
             <h1>Our Team</h1>
             <div class="row" id="member-cells">
                 <% for(var i=0; i< posts.length; i++) { %>
@@ -24,24 +33,22 @@
         $("#member-cells").on("click",".member-cell",function(){
             $(".member-cell").hide();
             $(this).show().addClass("shown-details")
-            $(this).find(".member-content").show().css({"display":"inline-block"})
-            $(this).find("img").css({
-                "margin-left": "0px",
-                "margin-right": "20px",
-                "display": "inline-block",
-                "float":"left"
+            
+            $(this).find("img").animate({
+                "left": "100px",
+            },function(){
+                $(".shown-details").find(".member-content").fadeIn("fast").css({"left":50+$(".shown-details").find("img").outerWidth()})
+            }).css({
             });
             $(this).find("img").data("expanded","true");
         });
         $("#member-cells").on("click",".shown-details",function(){
-            $(".member-cell").show();
-            $(this).find("img").css({
-                "margin-left": "",
-                "margin-right": "",
-                "display": "",
-                "float":""
-            });
             $(this).find(".member-content").hide();
+            $(".member-cell").show(function(){
+                $(this).find("img").animate({
+                    "left": "50%",
+                });
+            });
             $(this).removeClass("shown-details");
         });
     })

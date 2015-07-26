@@ -1,23 +1,40 @@
 <div class="row event-list">
     <div class="col-md-8 col-md-offset-2">
         <h1>Events</h1>
-        <div class="years"><span>Last Year</span> <span class="current">This Year</span> <span>Next Yer</span></div>
+        <div class="years">
+            <% for(var i=0; i< years.length; i++) { %>
+                <% if(i == 2){ %>
+                    <span class="current"><%= years[i] %></span>
+                <% } else { %>
+                    <span><a href="/events?year=<%= years[i] %>"><%= years[i] %></a></span>
+                <% } %>
+            <% } %>
+        </div>
         <% for(var i=0; i< posts.length; i++) { %>
             <div class="event-holder">
                 <div class="event-photo"></div>
                 <div class="event-data">
                     <h2><%= posts[i].title %></h2>
                 	<h5><%= posts[i].date %></h5>
+                    <p>This Is some example text for event details</p>
                 </div>
             </div>
         <% } %>
     </div>
 </div>
-<div clas="spacer"> </div>
+<div id="caret"></div>
 <script>
     $(function () {
         $(".event-holder").on("click",function(){
-            $(this).find(".event-data").toggle();
+            $(".shown-event").hide()
+            $(this).find(".event-data").toggle().addClass("shown-event");
+
+            var CaretPosSettings = {top:$(this).offset().top + $(this).outerHeight(),left:$(this).offset().left+($(this).width()*0.5)-($("#caret").outerWidth() * 0.5)}
+            if($("#caret").is(":visible")){
+                $("#caret").animate(CaretPosSettings).show();
+            } else {
+                $("#caret").css(CaretPosSettings).show();
+            };
         });
     });
 </script>

@@ -57,29 +57,43 @@ var about = function (req,res){
 
 
 var blog = function (req,res){
-    var blogs = con.knex('blog_posts').select().from('blog_posts').then(function(a) {
-        render.base(res,'blog.ejs',{posts:a}) 
+    var blogs = con.knex('blog_posts').select().from('blog_posts').orderBy('id','desc').then(function(a) {
+        var truncatedBlogPosts = []
+        render.base(res,'blog.ejs',{posts:a});
     }).catch(function(error) {
-        console.error(error)
+        console.error(error);
     });
 };
 
 var team = function (req,res){
+    if(req.query.year){
+        year = +req.query.year
+    } else {
+        year = new Date().getFullYear()
+    };
+    //.where("year",year)
     var blogs = con.knex('members').select().from('members').then(function(a) {
-        render.base(res,'team.ejs',{posts:a}) 
+        years = [year-2,year-1,year,year+1]
+        render.base(res,'team.ejs',{posts:a,years:years}) 
     }).catch(function(error) {
         console.error(error);
     });
 };
 
 var events = function (req,res){
-	var blogs = con.knex('events').select().from('events').then(function(a) {
+    if(req.query.year){
+        year = +req.query.year
+    } else {
+        year = new Date().getFullYear()
+    };
+	var blogs = con.knex('events').select().from('events').whereBetween("date",[year+"/01/01",year+"/12/31"]).then(function(a) {
         var properDateEvents = []
         for(var i=0; i< a.length; i++){
             a[i].date = moment(a[i].date).format("MMMM Do, YYYY")
             properDateEvents.push(a[i]);
         };
-        render.base(res,'events.ejs',{posts:a}) 
+        years = [year-2,year-1,year,year+1]
+        render.base(res,'events.ejs',{posts:a,years:years}) 
     }).catch(function(error) {
         console.error(error);
     });
@@ -258,7 +272,7 @@ app.get("/login",authHelper);
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/'); //Can fire before session is destroyed?
-});s
+});
 
 //run server.
 var server = app.listen(2001, function(){
