@@ -154,6 +154,22 @@ a.blog-header h1:hover {
     margin: auto;
 }
 
+.member-content {
+    display: inline-block;
+    display: none;
+    width: 60%;
+}
+.shown-details {
+    width: 100%;
+}
+
+.member-content h2 {
+    margin-top: 0px;
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid #ff6900;
+}
+
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,

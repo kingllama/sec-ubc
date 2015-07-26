@@ -2,13 +2,15 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <h1>Our Team</h1>
-            <div class="row">
+            <div class="row" id="member-cells">
                 <% for(var i=0; i< posts.length; i++) { %>
-                    <div class="col-md-3 col-sm-4 col-tn-2 member-cell">
+                    <div class="col-md-3 col-sm-4 col-tn-2 member-cell" data-id="<%= posts[i].id %>">
                         <img src="/images/SEC-profile-picture.png" alt="<%= posts[i].title %>" class="member-profile">
-                        <h2><%= posts[i].title %></h2>
-                        <div>
-                            <%- posts[i].description %>
+                        <div class="member-content">
+                            <h2><%= posts[i].title %></h2>
+                            <div>
+                                <%- posts[i].description %>
+                            </div>
                         </div>
                     </div>
                 <% } %>
@@ -16,3 +18,31 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function() {
+        $("#member-cells").on("click",".member-cell",function(){
+            $(".member-cell").hide();
+            $(this).show().addClass("shown-details")
+            $(this).find(".member-content").show().css({"display":"inline-block"})
+            $(this).find("img").css({
+                "margin-left": "0px",
+                "margin-right": "20px",
+                "display": "inline-block",
+                "float":"left"
+            });
+            $(this).find("img").data("expanded","true");
+        });
+        $("#member-cells").on("click",".shown-details",function(){
+            $(".member-cell").show();
+            $(this).find("img").css({
+                "margin-left": "",
+                "margin-right": "",
+                "display": "",
+                "float":""
+            });
+            $(this).find(".member-content").hide();
+            $(this).removeClass("shown-details");
+        });
+    })
+</script>
