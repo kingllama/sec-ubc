@@ -23,10 +23,11 @@
   },
   "homepage": "https://github.com/kingllama/sec-ubc#readme",
   "dependencies": {
+    "body-parser": "^1.13.2",
     "ejs": "~2.3.3",
     "express": "~4.13.1",
+    "express-session": "~1.11.3",
     "knex": "^0.8.6",
-    "pg": "^4.4.0",
-    "express-session": "~1.11.3"
+    "pg": "^4.4.0"
   }
 }
