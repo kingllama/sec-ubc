@@ -180,6 +180,24 @@ var blogDeletePost = function (req,res){
 };
 
 var memberAddPost = function (req,res){
+    // get the temporary location of the file
+    var tmp_path = req.file.path;
+    // set where the file should actually exists 
+    var target_path = "/images/uploads/" + req.file.filename + ".jpg";
+    // move the file from the temporary location to the intended location
+    fs.rename(tmp_path, "./public" + target_path, function(err) {
+        if (err) throw err;
+        // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+        fs.unlink(tmp_path, function() {
+            if(err) {
+                throw err;
+            } else {
+                var profile_pic = req.file.name;
+                //use profile_pic to do other stuffs like update DB or write rendering logic here.
+            };
+        });
+    });
+
 	console.log('member POST hit')
 	if (!isNaN(req.body.memberDate.valueOf())){
 		var date_now = new Date()
@@ -191,8 +209,8 @@ var memberAddPost = function (req,res){
 	con.knex('members').insert({
         description: req.body.memberDescription,
         title: req.body.memberTitle,
-        date: date_now
-		// picture: req.body.picture 
+        date: date_now,
+		image: target_path
     }).catch(function(error) {
         console.error(error);
     });
@@ -203,10 +221,9 @@ var eventAddPost = function (req,res){
 	// get the temporary location of the file
     var tmp_path = req.file.path;
     // set where the file should actually exists 
-    var target_path = "/public/images/uploads/" + req.file.filename + ".jpg";
-    console.log(target_path)
+    var target_path = "/images/uploads/" + req.file.filename + ".jpg";
     // move the file from the temporary location to the intended location
-    fs.rename(tmp_path, target_path, function(err) {
+    fs.rename(tmp_path, "./public" + target_path, function(err) {
         if (err) throw err;
         // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
         fs.unlink(tmp_path, function() {
@@ -229,7 +246,8 @@ var eventAddPost = function (req,res){
 	con.knex('events').insert({date: date_now,
 								title: req.body.eventTitle,
 								content: req.body.eventContent,
-								link: req.body.eventLink})
+								link: req.body.eventLink,
+                                image: target_path})
 	.catch(function(error) {
         console.error(error)
     });
@@ -314,7 +332,7 @@ app.post("/admin/blog/create",blogCreatePost);
 
 //members
 //app.get("/admin/member/add",memberAdd);
-app.post("/admin/member/add",memberAddPost);
+app.post("/admin/member/add",upload.single('userphoto'),memberAddPost);
 
 
 //events

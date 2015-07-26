@@ -12,12 +12,12 @@
         </div>
         <% for(var i=0; i< posts.length; i++) { %>
             <div class="event-holder">
-                <div class="event-photo"></div>
+                <div class="event-photo" style="background-image: url(<%= posts[i].image %>);background-size: 100px;background-repeat: no-repeat;"></div>
                 <div class="event-data">
                     <h2><%= posts[i].title %></h2>
                 	<h5><%= posts[i].date %></h5>
-                	<div><%= posts[i].content %></div>
-                	<div><%= posts[i].link %></div>
+                	<div><%- posts[i].content %></div>
+                	<div><a href="<%= posts[i].link %>"><%= posts[i].link %></a></div>
                 </div>
             </div>
         <% } %>
