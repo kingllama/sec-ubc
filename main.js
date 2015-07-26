@@ -43,15 +43,12 @@ var events = function (req,res){
 var team = function (req,res){
 
 };
-//NOT WORKING
 var blog = function (req,res){
 	var blogs = con.knex('blog_posts').select().from('blog_posts')
-	 .then(function() {  return; })
+	 .then(function(a) {  res.send(a); })
 	.catch(function(error) {
     console.error(error)
   });
-	console.log(blogs);
-	res.send(blogs);
 
 };
 
@@ -60,10 +57,11 @@ var blogPost = function (req,res){
 };
 
 var admin = function (req,res){
-
+	render.adminBase(res,'addBlog.ejs',{});
 };
 
 var blogCreatePost = function (req,res){
+	console.log('blog post hit');
 	con.knex('blog_posts').insert({content: req.body.content,
 									title: req.body.title,
 									date: new Date() })
@@ -78,7 +76,7 @@ var adminLogin = function (req,res){
 };
 
 var blogWritePost = function (req,res){
-
+	
 };
 
 var blogRewritePost = function (req,res){
@@ -94,9 +92,20 @@ var blogDeletePost = function (req,res){
 
 };
 
-var memberAdd = function (req,res){
-	con.knex('members').insert({description: req.body.description,
-									title: req.body.title })
+var memberAddPost = function (req,res){
+	con.knex('members').insert({description: req.body.picture,
+									title: req.body.title ,
+									picture: req.body.picture })
+	.catch(function(error) {
+    console.error(error)
+  });
+	res.send('added');
+};
+
+var eventAddPost = function (req,res){
+	con.knex('members').insert({description: req.body.picture,
+									title: req.body.title ,
+									picture: req.body.picture })
 	.catch(function(error) {
     console.error(error)
   });
@@ -115,8 +124,21 @@ app.get("/blog/:postId",blogPost);
 app.get("/admin",admin);
 app.get("/admin/login",adminLogin);
 
+
+//blog
 app.get("/admin/blog/create",blogWritePost);
 app.post("/admin/blog/create",blogCreatePost);
+
+
+//members
+app.get("/admin/member/add",memberAdd);
+app.post("/admin/member/add",memberAddPost);
+
+
+//events
+app.get("/admin/event/create",eventAdd);
+app.post("/admin/event/create",eventAddPost);
+
 app.post("/admin/member/add",memberAdd);
 app.get("/admin/blog/edit/:postId",blogRewritePost);
 app.put("/admin/blog/edit/:postId",blogUpdatePost);
