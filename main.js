@@ -109,6 +109,7 @@ var blogDeletePost = function (req,res){
 };
 
 var memberAddPost = function (req,res){
+	console.log('member post hit')
 	con.knex('members').insert({
         description: req.body.memberDescription,
         title: req.body.memberTitle
@@ -116,17 +117,19 @@ var memberAddPost = function (req,res){
     }).catch(function(error) {
         console.error(error);
     });
+    res.send('added');
 };
 
 var eventAddPost = function (req,res){
+	console.log('event post hit')
+	console.log(req.body.eventTitle)
 	if (!req.body.date){
-		var date_now = new Date();
+		var date_now = new Date()
 	}else{
-		date_now = req.body.date;
+		date_now = req.body.date
 	}
 	con.knex('events').insert({date: date_now,
-									title: req.body.EventTitle ,
-									picture: req.body.picture })
+								title: req.body.eventTitle})
 	.catch(function(error) {
     console.error(error)
   });
