@@ -33,7 +33,7 @@ var main = function (req,res){
 };
 
 var about = function (req,res){
-
+    render.base(res,'about.ejs',{})
 };
 
 var events = function (req,res){
@@ -45,7 +45,7 @@ var team = function (req,res){
 };
 var blog = function (req,res){
 	var blogs = con.knex('blog_posts').select().from('blog_posts')
-	 .then(function(a) {  res.send(a); })
+	 .then(function(a) {  render.base(res,'blog.ejs',{posts:a}) })
 	.catch(function(error) {
     console.error(error)
   });
