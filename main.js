@@ -99,7 +99,7 @@ var team = function (req,res){
         year = new Date().getFullYear()
     };
     //.where("year",year)
-    var blogs = con.knex('members').select().from('members').then(function(a) {
+    var blogs = con.knex('members').select().from('members').whereBetween("date",[year+"/01/01",year+"/12/31"]).then(function(a) {
         years = [year-2,year-1,year,year+1]
         render.base(res,'team.ejs',{posts:a,years:years}) 
     }).catch(function(error) {
