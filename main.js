@@ -137,8 +137,12 @@ var blogPost = function (req,res){
 };
 
 var admin = function (req,res){
-	console.log(req.user)
-	render.adminBase(res,'addBlog.ejs',{});
+	if (req.user == undefined){
+		res.redirect('/login');
+	}else{
+		render.adminBase(res,'addBlog.ejs',{});
+	}
+	
 };
 
 var blogCreatePost = function (req,res){
@@ -290,7 +294,13 @@ var authHelperPost = function (req,res){
 }
 
 var authHelper = function (req,res){
-	res.render('login.ejs',{});
+	console.log(req.user);
+	if (!(req.user == undefined)){
+		res.redirect('/admin');
+	}else{
+		res.render('login.ejs',{});
+	}
+	
 }
 
 

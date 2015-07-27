@@ -58,6 +58,9 @@ con.knex.schema.createTable('admins', function(table) {
   	console.error(e);
 	})
 	.then(function(){
-	console.log(" EXITING")
+	console.log(" CREATED TABLES");
 	process.exit();
 	});
+
+
+
