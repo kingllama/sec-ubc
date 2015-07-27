@@ -5,16 +5,17 @@
  */
 
 body {
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
     font-family: "Roboto Slab","Helvetica Neue",Helvetica,Arial,sans-serif;
-    height: 100%;
-    position: relative;
 }
 
+.page-wrapper {
+    min-height: 500px;
+}
 
 .content {
     padding-top: 91px;
-    padding-bottom: 100px;
+    padding-bottom: 130px;
 }
 
 #top-image {
@@ -841,11 +842,8 @@ aside.clients img {
 }
 
 section#contact {
+    width: 100%;
     background-color: #222;
-    background-image: url(../img/map-image.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    clear:both;
     padding-bottom: 70px;
 }
 
