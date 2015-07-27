@@ -153,7 +153,7 @@ var blogCreatePost = function (req,res){
 	.catch(function(error) {
     console.error(error)
   });
-	res.send('added');
+	res.redirect('/blog') 
 };
 
 var conference = function (req,res){
@@ -273,7 +273,7 @@ var eventAddPost = function (req,res){
 	.catch(function(error) {
         console.error(error)
     });
-	res.send('added');
+	res.redirect("/events")
 
 };
 
@@ -285,7 +285,7 @@ var opportunityAddPost = function (req,res){
 	.catch(function(error) {
     console.error(error)
 });
-    res.send('added');
+    res.redirect("/opportunities")
 };
 
 var authHelperPost = function (req,res){
